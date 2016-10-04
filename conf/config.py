@@ -6,12 +6,16 @@
 __author__ = 'Jack Qin'
 
 configs = {
+    'sqlite': {
+        'sqlite_path': 'data\test.db'
+    },
     'salt': {
         'salt_path': 'E:\\test'
     },
     'mule': {
         'mule_home': '/home/muleManager',
         'mule_name': 'danz',
+		'program_id': 'scfidoc',
         'config_name': 'server1.properties.standalone',
         'config_resources': 'idocUncompress.xml,idocSync.xml,idocParser.xml,global.xml,sapReceive.xml'
     },
@@ -23,9 +27,8 @@ configs = {
         'db_name': 'CLOUDTRAIN'
     },
     'sap': {
-        'program_id': 'scfidoc',
-        'repository_name': 'ED1',
         'jcoSysnr': '10',
+		'repository_name': 'ED1',
         'gateway_host': '10.52.15.155',
         'SAProuter': '/H/113.105.5.250/H/',
         'jcoClient': '200',
