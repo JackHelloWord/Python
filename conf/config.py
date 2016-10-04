@@ -7,7 +7,7 @@ __author__ = 'Jack Qin'
 
 configs = {
     'sqlite': {
-        'sqlite_path': 'data\test.db'
+        'sqlite_path': 'data/test.db'
     },
     'salt': {
         'salt_path': 'E:\\test'
