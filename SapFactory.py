@@ -103,8 +103,31 @@ class SapFactory:
         sql = sql + "from sap "
 
         if len(conditions) != 0:
-            if not isinstance(paramaters, tuple):
-                conditions = (conditions,)
+            if not isinstance(conditions, dict):
+                return(0, "conditions is not a dict")
+            tempd = []
+            sql = sql + "where "
+            kv = list(conditions.items())
+            for i in range(len(kv)):
+                temp = ", " if i != len(kv) - 1 else " "
+                sql = sql + str(kv[i][0]) + " = ?" + temp
+                tempd.append(kv[i][1])
+            data = tuple(tempd)
+
+        db = DbFactory(True)
+        conn = db.get_conn(db.get_sqlite_path())
+        r = db.fetchone(sql=sql, conn=conn, data=data)
+        db.close(conn)
+
+        return r
+
+    def delete(self, conditions):
+        data = []
+        sql = "DELETE FROM sap "
+
+        if len(conditions) != 0:
+            if not isinstance(conditions, dict):
+                return(0, "conditions is not a dict")
             tempd = []
             sql = sql + "where "
             kv = list(conditions.items())

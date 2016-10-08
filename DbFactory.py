@@ -113,17 +113,17 @@ class DbFactory:
         try:
             if sql is not None and sql != '':
                 if data is not None:
-                    for d in data:
-                        if not isinstance(d, tuple):
-                            d = (d,)
-                        if self.__show_sql:
-                            print('执行sql:[{}],参数:[{}]'.format(sql, d))
-                        conn.execute(sql, d)
+                    if not isinstance(data, tuple):
+                        d = (data,)
+                    if self.__show_sql:
+                        print('执行sql:[{}],参数:[{}]'.format(sql, data))
+                    conn.execute(sql, data)
                     conn.commit()
                     print("Total number of rows updated :", conn.total_changes)
+                    return (1, conn.total_changes)
             else:
                 print('the [{}] is empty or equal None!'.format(sql))
-            return (1, "normal")
+                return (0, 'the [{}] is empty or equal None!'.format(sql))
         except Exception as e:
             conn.rollback()
             traceback.print_exc()
@@ -133,17 +133,17 @@ class DbFactory:
         try:
             if sql is not None and sql != '':
                 if data is not None:
-                    for d in data:
-                        if not isinstance(d, tuple):
-                            d = (d,)
-                        if self.__show_sql:
-                            print('执行sql:[{}],参数:[{}]'.format(sql, d))
-                        conn.execute(sql, d)
+                    if not isinstance(data, tuple):
+                        data = (data,)
+                    if self.__show_sql:
+                        print('执行sql:[{}],参数:[{}]'.format(sql, data))
+                    conn.execute(sql, data)
                     conn.commit()
                     print("Total number of rows deleted :", conn.total_changes)
+                    return (1, conn.total_changes)
             else:
                 print('the [{}] is empty or equal None!'.format(sql))
-            return (1, "normal")
+                return (0, 'the [{}] is empty or equal None!'.format(sql))
         except Exception as e:
             conn.rollback()
             traceback.print_exc()
