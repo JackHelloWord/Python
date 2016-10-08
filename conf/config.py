@@ -7,7 +7,7 @@ __author__ = 'Jack Qin'
 
 configs = {
     'sqlite': {
-        'sqlite_path': 'data/test.db'
+        'sqlite_path': 'data/date.db'
     },
     'salt': {
         'salt_path': 'E:\\test'
@@ -27,14 +27,14 @@ configs = {
         'db_name': 'CLOUDTRAIN'
     },
     'sap': {
-        'jcoSysnr': '10',
+        'jco_sysnr': '10',
 		'repository_name': 'ED1',
         'gateway_host': '10.52.15.155',
-        'SAProuter': '/H/113.105.5.250/H/',
-        'jcoClient': '200',
-        'jcoUser': 'HANDSRM',
-        'jcoPasswd': 'handhand',
-        'jcoLang': 'ZH',
+        'sap_router': '/H/113.105.5.250/H/',
+        'jco_client': '200',
+        'jco_user': 'HANDSRM',
+        'jco_passwd': 'handhand',
+        'jco_lang': 'ZH',
         'respository_destination': 'BCE'
     }
 }
