@@ -1,5 +1,5 @@
-{% set path = '<#path#>' %}
-{% set tar_name = '<#tar_name#>' %}
+{% set path = '<#mule_home#>' %}
+{% set tar_name = 'mule.tar.gz' %}
 {% set mule_home = '<#mule_home#>' %}
 {% set mule_name = '<#mule_name#>' %}
 mule_source:

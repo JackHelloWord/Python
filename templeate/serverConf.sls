@@ -2,9 +2,7 @@
 {% set mule_name = '<#mule_name#>' %}
 {% set db_user = '<#db_user#>' %}
 {% set db_password = '<#db_password#>' %}
-{% set db_host = '<#db_host#>' %}
-{% set db_port = '<#db_port#>' %}
-{% set db_name = '<#db_name#>' %}
+{% set db_tns = '<#db_tns#>' %}
 {% set config_name = '<#config_name#>' %}
 {% set config_resources = '<#config_resources#>' %}
 
@@ -28,9 +26,7 @@ idoc_conf1:
     - defaults:
       db_user: {{ db_user }}
       db_password: {{ db_password }}
-      db_host: {{ db_host }}
-      db_port: {{ db_port }}
-      db_name: {{ db_name }}
+      db_tns: {{ db_tns }}
       mule_home: {{ mule_home }}
       mule_name: {{ mule_name }}
       program_id: {{ program_id }}

@@ -21,7 +21,7 @@ class CreateScript:
             fw = open(tFile, "w", 1024)
 
             for i in fo:
-                for type in self.configs:
+                for type in ('mule', 'db', 'sap'):
                     for key in self.configs[type]:
                         i = i.replace("<#"+key+"#>", self.configs[type][key])
                 fw.write(i)
@@ -36,9 +36,12 @@ class CreateScript:
                 fo.close()
 
     def creatFiles(self):
+        path = os.path.abspath(self.configs['salt']['salt_path'])+os.sep+'mule'+os.sep+self.configs['mule']['mule_name']+os.sep
+        if not os.path.exists(path):
+            os.makedirs(path)
         for parent, dirnames, files in os.walk(self.templeateDir):
             for filename in files:
-                self.creatFile(parent+os.sep+filename,os.path.abspath(self.configs['salt']['salt_path'])+os.sep+filename)
+                self.creatFile(parent+os.sep+filename,path+filename)
 
 test = CreateScript()
 test.creatFiles()

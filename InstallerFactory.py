@@ -1,62 +1,45 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-' SAP '
+' INSTALLER '
 __author__ = 'Jack Qin'
 
 import sys
 sys.path.append("conf")
 import DbFactory
 
-class SapFactory:
+class InstallerFactory:
     def __init__(self):
         pass
 
-    def save_sap(self,
-                 sap_name,
-                 jco_sysnr,
-                 gateway_host,
-                 sap_router,
-                 jco_client,
-                 jco_user,
-                 jco_passwd,
-                 jco_lang,
-                 respository_destination,
-                 repository_name):
-        sap_data = (sap_name,
-                     jco_sysnr,
-                     gateway_host,
-                     sap_router,
-                     jco_client,
-                     jco_user,
-                     jco_passwd,
-                     jco_lang,
-                     respository_destination,
-                     repository_name)
-        sql = ("install INTO sap ("
-               "sap_name,"
-               "jco_sysnr,"
-               "gateway_host,"
-               "sap_router,"
-               "jco_client,"
-               "jco_user,"
-               "jco_passwd,"
-               "jco_lang,"
-               "respository_destination,"
-               "repository_name"
+    def save_install(self,
+                 path,
+                 user_id,
+                 server_id,
+                 ifinstall
+                 ):
+        install_data = (path,
+                    user_id,
+                    server_id,
+                    ifinstall)
+        sql = ("install INTO install ("
+               "path,"
+               "user_id,"
+               "server_id,"
+               "ifinstall"
                ") "
-               "VALUES(?,?,?,?,?,?,?,?,?,?)"
+               "VALUES(?,?,?,?)"
                )
 
         db = DbFactory(True)
         conn = db.get_conn(db.get_sqlite_path())
-        r = db.save(sql=sql,conn=conn, data=sap_data)
+        r = db.save(sql=sql,conn=conn, data=install_data)
         db.close(conn)
 
         return r
 
     def fetchall(self):
-        sql = "select * from sap"
+        sql = "select * from install"
         db = DbFactory(True)
         conn = db.get_conn(db.get_sqlite_path())
         r = db.fetchall(sql=sql, conn=conn)
@@ -73,7 +56,7 @@ class SapFactory:
             temp = ", " if i != len(paramaters) - 1 else " "
             sql = sql + str(paramaters[i]) + temp
 
-        sql = sql + "from sap "
+        sql = sql + "from install "
 
         if len(conditions) != 0:
             if not isinstance(conditions, dict):
@@ -96,7 +79,7 @@ class SapFactory:
 
     def delete(self, conditions):
         data = []
-        sql = "DELETE FROM sap "
+        sql = "DELETE FROM install "
 
         if len(conditions) != 0:
             if not isinstance(conditions, dict):
@@ -120,7 +103,7 @@ class SapFactory:
     def update(self, paramaters, conditions):
         data = ()
         tempd = []
-        sql = "UPDATE FROM sap SET "
+        sql = "UPDATE FROM install SET "
         if not isinstance(paramaters, dict):
             return (0, "paramaters is not a dict")
         kv = list(conditions.items())

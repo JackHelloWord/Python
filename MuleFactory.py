@@ -1,62 +1,48 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-' SAP '
+' MULE '
 __author__ = 'Jack Qin'
 
 import sys
 sys.path.append("conf")
 import DbFactory
 
-class SapFactory:
+class Factory:
     def __init__(self):
         pass
 
-    def save_sap(self,
-                 sap_name,
-                 jco_sysnr,
-                 gateway_host,
-                 sap_router,
-                 jco_client,
-                 jco_user,
-                 jco_passwd,
-                 jco_lang,
-                 respository_destination,
-                 repository_name):
-        sap_data = (sap_name,
-                     jco_sysnr,
-                     gateway_host,
-                     sap_router,
-                     jco_client,
-                     jco_user,
-                     jco_passwd,
-                     jco_lang,
-                     respository_destination,
-                     repository_name)
-        sql = ("install INTO sap ("
-               "sap_name,"
-               "jco_sysnr,"
-               "gateway_host,"
-               "sap_router,"
-               "jco_client,"
-               "jco_user,"
-               "jco_passwd,"
-               "jco_lang,"
-               "respository_destination,"
-               "repository_name"
+    def save_mule(self,
+                 mule_name,
+                 program_id,
+                 sap_id,
+                 sap_server_name,
+                 install_id
+                 ):
+        mule_data = (mule_name,
+                     program_id,
+                     sap_id,
+                     sap_server_name,
+                     install_id)
+        sql = ("install INTO mule ("
+               "mule_name,"
+               "program_id,"
+               "sap_id,"
+               "sap_server_name,"
+               "install_id"
                ") "
-               "VALUES(?,?,?,?,?,?,?,?,?,?)"
+               "VALUES(?,?,?,?,?)"
                )
 
         db = DbFactory(True)
         conn = db.get_conn(db.get_sqlite_path())
-        r = db.save(sql=sql,conn=conn, data=sap_data)
+        r = db.save(sql=sql,conn=conn, data=mule_data)
         db.close(conn)
 
         return r
 
     def fetchall(self):
-        sql = "select * from sap"
+        sql = "select * from mule"
         db = DbFactory(True)
         conn = db.get_conn(db.get_sqlite_path())
         r = db.fetchall(sql=sql, conn=conn)
@@ -73,7 +59,7 @@ class SapFactory:
             temp = ", " if i != len(paramaters) - 1 else " "
             sql = sql + str(paramaters[i]) + temp
 
-        sql = sql + "from sap "
+        sql = sql + "from mule "
 
         if len(conditions) != 0:
             if not isinstance(conditions, dict):
@@ -96,7 +82,7 @@ class SapFactory:
 
     def delete(self, conditions):
         data = []
-        sql = "DELETE FROM sap "
+        sql = "DELETE FROM mule "
 
         if len(conditions) != 0:
             if not isinstance(conditions, dict):
@@ -120,7 +106,7 @@ class SapFactory:
     def update(self, paramaters, conditions):
         data = ()
         tempd = []
-        sql = "UPDATE FROM sap SET "
+        sql = "UPDATE FROM mule SET "
         if not isinstance(paramaters, dict):
             return (0, "paramaters is not a dict")
         kv = list(conditions.items())

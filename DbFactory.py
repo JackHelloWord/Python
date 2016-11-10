@@ -60,16 +60,19 @@ class DbFactory:
         try:
             if sql is not None and sql != '':
                 if data is not None:
-                    for d in data:
-                        if not isinstance(d, tuple):
-                            d = (d,)
-                        if self.__show_sql:
-                            print('执行sql:[{}],参数:[{}]'.format(sql, d))
-                        conn.execute(sql, d)
+                    if not isinstance(data, tuple):
+                        data = (data,)
+                    if self.__show_sql:
+                        print('执行sql:[{}],参数:[{}]'.format(sql, data))
+                    cursor = conn.execute(sql, data)
                     conn.commit()
+                    return(1, cursor.lastrowid)
+                else:
+                    print('the [{}] is empty or equal None!'.format(data))
+                    return (0, 'the [{}] is empty or equal None!'.format(data))
             else:
                 print('the [{}] is empty or equal None!'.format(sql))
-            return (1, "normal")
+                return (0, 'the [{}] is empty or equal None!'.format(sql))
         except Exception as e:
             conn.rollback()
             traceback.print_exc()
@@ -92,12 +95,11 @@ class DbFactory:
     def fetchone(self, conn, sql, data):
         if sql is not None and sql != '':
             if data is not None:
-                d = data
                 if not isinstance(data, tuple):
-                    d = (data,)
+                    data = (data,)
                 if self.__show_sql:
                     print('执行sql:[{}],参数:[{}]'.format(sql, data))
-                cursor = conn.execute(sql, d)
+                cursor = conn.execute(sql, data)
                 r = cursor.fetchall()
                 k = []
                 for idx, col in enumerate(cursor.description):
@@ -114,7 +116,7 @@ class DbFactory:
             if sql is not None and sql != '':
                 if data is not None:
                     if not isinstance(data, tuple):
-                        d = (data,)
+                        data = (data,)
                     if self.__show_sql:
                         print('执行sql:[{}],参数:[{}]'.format(sql, data))
                     conn.execute(sql, data)
@@ -149,12 +151,12 @@ class DbFactory:
             traceback.print_exc()
             return (-1, traceback.format_exc())
 
-test = DbFactory(True)
+#test = DbFactory(True)
 #print(test.get_sqlite_path())
-conn = test.get_conn(test.get_sqlite_path())
+#conn = test.get_conn(test.get_sqlite_path())
 #print(conn)
-r = test.fetchone(sql="select * from server where server_name = ? and server_ip = ?", conn=conn, data=("minion134", "192.168.194.134"))
-print(r)
+#r = test.fetchone(sql="select * from server where server_name = ? and server_ip = ?", conn=conn, data=("minion134", "192.168.194.134"))
+#print(r)
 #data = [("minion140","192.168.194.140",22,"handhand",-1),]
 #r = test.save(sql="insert into server (server_name,server_ip,server_port,password,ifkey) VALUES (?,?,?,?,?)", conn=conn, data=data)
 #data = [("minion138", ),]

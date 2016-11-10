@@ -20,11 +20,15 @@ configs = {
         'config_resources': 'idocUncompress.xml,idocSync.xml,idocParser.xml,global.xml,sapReceive.xml'
     },
     'db': {
-        'db_host': '172.20.0.199',
-        'db_port': '1521',
+        'db_tns': '(DESCRIPTION='
+                  '(ADDRESS_LIST='
+                  '(LOAD_BALANCE=YES)'
+                  '(FAILOVER=YES)'
+                  '(ADDRESS=(PROTOCOL=tcp)(HOST=172.20.0.199)(PORT=1521)))'
+                  '(CONNECT_DATA=(SERVICE_NAME=CLOUDTRAIN))'
+                  ')',
         'db_user': 'cloudtrain',
-        'db_password': 'handcloudtrain',
-        'db_name': 'CLOUDTRAIN'
+        'db_password': 'handcloudtrain'
     },
     'sap': {
         'jco_sysnr': '10',
